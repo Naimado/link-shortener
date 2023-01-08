@@ -1,7 +1,10 @@
 package com.example.linkshortener.link;
 
 import com.example.linkshortener.LinkDto;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.beans.Transient;
 
 @Service
 class LinkServiceImpl implements LinkService {
@@ -21,13 +24,11 @@ class LinkServiceImpl implements LinkService {
     }
 
     @Override
+    @Transactional
     public LinkDto getLinkAndIncrementVisits(final String id) {
-        if(linkRepository.findById(id).isEmpty()){
-            throw new RuntimeException();
-        }
-        LinkEntity linkEntity=linkRepository.findById(id).get();
-        linkEntity.setVisits(linkEntity.visits+1);
-        return linkRepository.save(linkEntity).toDto();
+        final LinkEntity linkEntity=linkRepository.findById(id).orElseThrow(()->new LinkNotFoundException(id));
+        linkEntity.setVisits(linkEntity.getVisits()+1);
+        return linkEntity.toDto();
     }
 
 }
