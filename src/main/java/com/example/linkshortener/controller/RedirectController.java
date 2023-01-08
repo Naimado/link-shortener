@@ -1,5 +1,7 @@
-package com.example.linkshortener;
+package com.example.linkshortener.controller;
 
+import com.example.linkshortener.LinkDto;
+import com.example.linkshortener.link.LinkService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +15,12 @@ import java.io.IOException;
 @RequestMapping("/s")
 class RedirectController {
 
+    LinkService linkService;
     @GetMapping("/{id}")
     public void redirectLink(
 
             @PathVariable String id, HttpServletResponse httpServletResponse) throws IOException {
-
-
-        httpServletResponse.sendRedirect("https://google.com");
+        httpServletResponse.sendRedirect("google.com");
 
     }
 

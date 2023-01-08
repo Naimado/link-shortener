@@ -1,4 +1,6 @@
-package com.example.linkshortener;
+package com.example.linkshortener.controller;
+
+import com.example.linkshortener.LinkDto;
 
 import java.time.LocalDate;
 
