@@ -21,9 +21,13 @@ class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public LinkDto getLink(final String id) {
-        return linkRepository.findById(id).get().toDto();
+    public LinkDto getLinkAndIncrementVisits(final String id) {
+        if(linkRepository.findById(id).isEmpty()){
+            throw new RuntimeException();
+        }
+        LinkEntity linkEntity=linkRepository.findById(id).get();
+        linkEntity.setVisits(linkEntity.visits+1);
+        return linkRepository.save(linkEntity).toDto();
     }
-
 
 }
